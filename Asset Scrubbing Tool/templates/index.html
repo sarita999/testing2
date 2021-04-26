@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+/* Style the body */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+/* Header/logo Title */
+.header {
+  padding: 15px;
+}
+
+.content {
+
+	padding: 150px;
+}
+
+
+</style>
+</head>
+<body>
+<div>
+	<div class="header">
+		<div style="text-align: center;display: inline-flex;align-items: center">	
+      		<img src="{{ url_for('static', filename='accenture.PNG')}}" style="vertical-align: middle;float:left;width:100px;height:25px ;"><b style="padding-left: 5px;padding-top: 6px">|</b>
+      		<span style="vertical-align:middle;float:left; font-size: 24px;color: #660099;padding-top: 6px;padding-left: 5px"><b>myConcerto</b></span>
+      	</div>
+      	<ul style=" list-style-type: none;margin: 0px;  font-size: 35px;padding: 5px;text-align: center;color: white;background: 
+      	#660099;">
+      		<li>Scrubbing Tool</li>
+      	</ul>
+  	</div>
+  	<!-- <button class=button type="button" onclick="filepicker.click()">Clear</button> -->
+  	<div class="content" style="  padding: 10px;border: 5px solid gray;margin-top: 120px;margin-left:50px;margin-right:50px ;border-radius: 5px">
+		<form method="POST" >
+			<input name="text" size="80" placeholder="Input Parent Folder Path Here" style="margin-left:70px">
+			<input type="submit" value="Submit" style="background-color: #9933ff;color: white">
+		</form>
+	</div>
+</div>
+
+</body>
+</html>

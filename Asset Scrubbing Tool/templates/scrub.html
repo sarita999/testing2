@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+/* Style the body */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+/* Header/logo Title */
+.header {
+  padding: 15px;
+}
+
+.content {
+
+	padding: 150px;
+}
+.button {
+  background-color: #660099; 
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+}
+.button:hover {
+  background-color: black; /* White */
+  color: white;
+}
+
+</style>
+</head>
+<body>
+<script type="text/javascript">
+    function ShowHideDiv() {
+		    ScrubOptions.style.display = "block";
+	}
+    function ShowMsg() {
+    	 if (document.getElementById('img').checked){
+    	 	document.getElementById('ImageOptions').style.display = 'block';
+
+
+    	 	document.getElementById('TextOptions').style.display = 'none';
+    	 	document.getElementById('replacetext').checked = false;
+    	 	document.getElementById('removetext').checked = false;
+    	 	removeKey.style.display = "none";
+    	 	replaceKey.style.display = "none";
+    	 	document.getElementById('replacekeyword').value = ''
+    	 	document.getElementById('removekeyword').value = ''
+    	 	document.getElementById("replacekeyword").required = false;
+	    	document.getElementById("removekeyword").required = false;
+
+
+    	 	document.getElementById('BothOptions').style.display = 'none';
+    	 	document.getElementById('replace').checked = false;
+    	 	document.getElementById('remove').checked = false;
+    	 	totalremoveKey.style.display = "none";
+    	 	totalreplaceKey.style.display = "none";
+    	 	document.getElementById('totalreplacekeyword').value = ''
+    	 	document.getElementById('totalremovekeyword').value = ''
+    	 	document.getElementById('totalclientName').value = ''
+    	 	document.getElementById("totalclientName").required = false;
+    	 	document.getElementById("totalreplacekeyword").required = false;
+	    	document.getElementById("totalremovekeyword").required = false;
+
+    	 }
+    	 else if(document.getElementById('txt').checked){
+    	 	document.getElementById('ImageOptions').style.display = 'none';
+    	 	document.getElementById('clientName').value = ''
+
+    	 	document.getElementById('TextOptions').style.display = 'block';
+
+    	 	document.getElementById('BothOptions').style.display = 'none';
+    	 	document.getElementById('replace').checked = false;
+    	 	document.getElementById('remove').checked = false;
+    	 	totalremoveKey.style.display = "none";
+    	 	totalreplaceKey.style.display = "none";
+    	 	document.getElementById('totalreplacekeyword').value = ''
+    	 	document.getElementById('totalremovekeyword').value = ''
+    	 	document.getElementById('totalclientName').value = ''
+    	 }
+    	 else{
+    	 	document.getElementById('ImageOptions').style.display = 'none';
+    	 	document.getElementById('clientName').value = ''
+
+    	 	document.getElementById('TextOptions').style.display = 'none';
+    	 	document.getElementById('replacetext').checked = false;
+    	 	document.getElementById('removetext').checked = false;
+    	 	removeKey.style.display = "none";
+    	 	replaceKey.style.display = "none";
+    	 	document.getElementById('replacekeyword').value = ''
+    	 	document.getElementById('removekeyword').value = ''
+
+    	 	document.getElementById('BothOptions').style.display = 'block';
+    	 }
+    }
+
+    function ShowReplaceAction(){
+    	replaceKey.style.display = "block";
+    	removeKey.style.display = "none";
+    	document.getElementById('removekeyword').value = ''
+    	document.getElementById("replacekeyword").required = true;
+    	document.getElementById("removekeyword").required = false;
+    	document.getElementById("totalreplacekeyword").required = false;
+    	document.getElementById("totalremovekeyword").required = false;
+    	document.getElementById("totalclientName").required = false;
+    	document.getElementById("clientName").required = false;
+    }
+
+    function ShowRemoveAction(){
+    	removeKey.style.display = "block";
+    	replaceKey.style.display = "none";
+    	document.getElementById('replacekeyword').value = ''
+    	document.getElementById("replacekeyword").required = false;
+    	document.getElementById("removekeyword").required = true;
+    	document.getElementById("totalremovekeyword").required = false;
+    	document.getElementById("totalreplacekeyword").required = false;
+    	document.getElementById("totalclientName").required = false;
+    	document.getElementById("clientName").required = false;
+    }
+
+    function ShowTotalReplaceAction(){
+    	totalreplaceKey.style.display = "block";
+    	totalremoveKey.style.display = "none";
+    	document.getElementById('totalremovekeyword').value = ''
+    	document.getElementById("totalreplacekeyword").required = true;
+    	document.getElementById("totalremovekeyword").required = false;
+    	document.getElementById("replacekeyword").required = false;
+    	document.getElementById("removekeyword").required = false;
+    	document.getElementById("clientName").required = false;
+
+    }
+
+    function ShowTotalRemoveAction(){
+    	totalremoveKey.style.display = "block";
+    	totalreplaceKey.style.display = "none";
+    	document.getElementById('totalreplacekeyword').value = ''
+    	document.getElementById("totalreplacekeyword").required = false;
+    	document.getElementById("totalremovekeyword").required = true;
+    	document.getElementById("replacekeyword").required = false;
+    	document.getElementById("removekeyword").required = false;
+    	document.getElementById("clientName").required = false;
+    }
+</script>	
+<div>
+	<div class="header">
+		<div style="text-align: center;display: inline-flex;align-items: center">	
+      		<img src="{{ url_for('static', filename='accenture.PNG')}}" style="vertical-align: middle;float:left;width:100px;height:25px ;"><b style="padding-left: 5px;padding-top: 6px">|</b>
+      		<span style="vertical-align:middle;float:left; font-size: 24px;color: #660099;padding-top: 6px;padding-left: 5px"><b>myConcerto</b></span>
+      	</div>
+      	<ul style=" list-style-type: none;margin: 0px;  font-size: 35px;padding: 5px;text-align: center;color: white;background: 
+      	#660099;">
+      		<li>Scrubbing Tool</li>
+      	</ul>
+  	</div>
+  	<div class="content" style="  padding: 10px;border: 5px solid gray;margin-top: 120px;margin-left:50px;margin-right:50px ;border-radius: 5px">
+		<form method="POST" >
+			<input name="fpath" type="text" id="fpath" size="80" placeholder="Input Parent Folder Path Here" style="margin-left:70px" >
+			<button class=button type="button" onclick="ShowHideDiv()">Next</button> 
+		
+			<div id ="ScrubOptions" style="padding-left: 70px; display: none">
+					 <p>Please select an Action:</p>
+					 <input type="radio" id="img" name="scrub" value="img" onclick="ShowMsg()">
+					 <label for="img" style="padding-right: 70px">Image Removal</label>
+					 <input type="radio" id="txt" name="scrub" value="txt" onclick="ShowMsg()">
+					 <label for="txt" style="padding-right: 70px">Text Scrubbing</label>
+					 <input type="radio" id="both" name="scrub" value="both" onclick="ShowMsg()">
+					 <label for="both" style="padding-right: 70px">Both</label>
+					 <div id ="ImageOptions" style="padding-left: 70px;padding-top: 20px; display: none">
+						 	<label style="padding-right: 70px">Client Name For Image Scrubbing:</label>
+					 		<input type="text" name="clientName" id ="clientName" placeholder="Please Enter Client Name Here" required><br><br>
+					 		<input type="submit" name="imgsubmit" value="Scrub" class="button">
+					 </div>
+					 <div id ="TextOptions" style="padding-left: 70px;padding-top: 20px; display: none">
+						<!-- Code for adding radio button -->
+						  <p>Please select an Action for Text Scrubbing:</p>
+						  <div style="padding-left: 20px">
+						  	<input type="radio" id="replacetext" name="textscrub" value="replacetext" onclick="ShowReplaceAction()">
+						  	<label for="replacetext" style="padding-right: 70px" >Replace Text</label>
+						  	<input type="radio" id="removetext" name="textscrub" value="removetext" onclick="ShowRemoveAction()">
+						  	<label for="removetext" style="padding-right: 70px" >Remove Text</label>
+						  </div>
+						  <div id ="replaceKey" style="display:none;padding-top: 30px">
+						  	<label style="padding-right: 142px">Keywords for replacing :</label>
+							 <input type="text" name="replacekeyword" id="replacekeyword" size="50"  placeholder="Add data with : as a separator"><br><br>
+						 	<input type="submit" name="txtreplacesubmit" class=button value="Scrub">
+						  </div>
+						  <div id ="removeKey" style="display:none;padding-top: 30px">
+						  	<label style="padding-right: 142px">Keywords for removing :</label>
+							 <input type="text" size="50" name="removekeyword" id="removekeyword" placeholder="Add data with , as a seperator"><br><br>
+						 	<input type="submit" name="txtremovesubmit" class=button value="Scrub">
+						  </div>
+					 </div>
+
+
+
+
+
+					 <div id ="BothOptions" style="padding-left: 70px;padding-top: 20px; display: none">
+						 <label style="padding-right: 70px">Client Name For Image Scrubbing:</label>
+						 <input type="text" name="totalclientName" id ="totalclientName" placeholder="Please Enter Client Name Here" required><br><br>
+						  <p>Please select an Action for Text Scrubbing:</p>
+						  <div style="padding-left: 20px">
+						  	<input type="radio" id="replace" name="totalscrub" value="replace" onclick="ShowTotalReplaceAction()">
+						  	<label for="replace" style="padding-right: 70px" >Replace Text</label>
+						  	<input type="radio" id="remove" name="totalscrub" value="remove" onclick="ShowTotalRemoveAction()">
+						  	<label for="remove" style="padding-right: 70px" >Remove Text</label>
+						  </div>
+						  <div id ="totalreplaceKey" style="display:none;padding-top: 30px">
+						  	<label style="padding-right: 142px">Keywords for replacing :</label>
+							 <input type="text" size="50" name="totalreplacekeyword" id ="totalreplacekeyword" placeholder="Add data with : as a separator" required><br><br>
+						 	<input type="submit" name="totalreplacesubmit" class=button value="Scrub">
+						  </div>
+						  <div id ="totalremoveKey" style="display:none;padding-top: 30px">
+						  	<label style="padding-right: 142px">Keywords for removing :</label>
+							 <input type="text" size="50" name="totalremovekeyword" id ="totalremovekeyword" placeholder="Add data with , as a seperator" required><br><br>
+						 	<input type="submit" name="totalremovesubmit" class=button value="Scrub">
+						  </div>
+					 </div>
+			</div>
+		</form>
+	</div>
+
+
+
+</div>
+
+</body>
+</html>
