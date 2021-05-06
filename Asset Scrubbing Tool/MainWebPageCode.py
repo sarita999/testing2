@@ -10,6 +10,8 @@ import imgscrub
 import PropRemoval
 from imgscrub import *
 import Main_Fn
+import EmbeddedDoc
+
 
 app = Flask(__name__) 
 #______________Default Page view--------------
@@ -35,10 +37,14 @@ def my_form_post():
         imgscrub.start_img_scrub(folder_path,clientName)
         print("Image Scrubbing done with client name : "+clientName)
         
+        EmbeddedDoc.embedded_file_scrubbing(folder_path,"img",clientName)
+        print("Embedded file operation completed")
+        
         try:
-            PropRemoval.prop_removal(scrub_path)
+            PropRemoval.prop_removal(folder_path)
+            print("Property Removal Action Completed")
         except Exception:
-            print("Exception")
+            print("Property removal Exception")
         
         
         
@@ -47,6 +53,7 @@ def my_form_post():
         print(selected_txt_option)
         try:
             PropRemoval.prop_removal(folder_path)
+            print("Property Removal Action Completed")
         except Exception:
             print("Exception")
             
@@ -54,12 +61,14 @@ def my_form_post():
             keyword = request.form['replacekeyword']
             Flag_Status='replace'            
             Main_Fn.Main_function(folder_path,Flag_Status,keyword)
+            EmbeddedDoc.embedded_file_scrubbing(folder_path,"txt_replace",keyword)
         else:
             keyword = request.form['removekeyword']
             Flag_Status='remove'            
             Main_Fn.Main_function(folder_path,Flag_Status,keyword)
+            EmbeddedDoc.embedded_file_scrubbing(folder_path,"txt_remove",keyword)
             
-        print(keyword)
+        print("Embedded file operation completed")
 
     else:
         clientName= request.form['totalclientName']
@@ -68,21 +77,28 @@ def my_form_post():
         print("Total Scrubbing selected with client name : "+clientName)
         selected_txt_option= request.form['totalscrub']
         print(selected_txt_option)
+        
         if selected_txt_option=='replace':
             keyword = request.form['totalreplacekeyword']
+            keys=[clientName,keyword]
             Flag_Status='replace'            
-            Main_Fn.Main_function(scrub_path,Flag_Status,keyword)
+            Main_Fn.Main_function(folder_path,Flag_Status,keyword)
+            EmbeddedDoc.embedded_file_scrubbing(folder_path,"both_replace",keys)
         else:
             keyword = request.form['totalremovekeyword']
+            keys=[clientName,keyword]
             Flag_Status='remove'            
-            Main_Fn.Main_function(scrub_path,Flag_Status,keyword)
-            
-        print(keyword)
+            Main_Fn.Main_function(folder_path,Flag_Status,keyword)
+            EmbeddedDoc.embedded_file_scrubbing(folder_path,"both_remove",keys)
+        
+        print("Embedded file operation completed")
         try:
-            PropRemoval.prop_removal(scrub_path)
+            PropRemoval.prop_removal(folder_path)
+            print("Property Removal Action Completed")
         except Exception:
             print("Exception")
-        
+    
+    print("Scrubbing Done")
     return render_template('scrub.html')
 
 

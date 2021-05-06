@@ -86,7 +86,7 @@ def Scrubbing_Replace():
                                     for run in paragraph.runs:
                                         text_runs.append(run.text)
                                         for key,value in Replace_List:
-                                            thisText1 = re.sub(key + "(?=$|[^a-z])", value, cur_text, flags=re.IGNORECASE)
+                                            thisText1 = re.sub(key + "(?=$|[^a-z])", value, run.text, flags=re.IGNORECASE)
                                             run.text = thisText1
 
 
