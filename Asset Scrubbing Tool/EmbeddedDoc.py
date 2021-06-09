@@ -24,6 +24,8 @@ def embedded_file_scrubbing(folder_path,scrub_type,keys):
         for file in files:
             print("Check for Embedded file on :"+ file)
             filename,fileext = os.path.splitext(file)
+            while filename[-1]==" ":
+                filename=filename[:-1]
             directory_to_extract_to = root+"\\"+filename
             file_path=os.path.join(root,file)
     #         print(file_path)
@@ -35,9 +37,14 @@ def embedded_file_scrubbing(folder_path,scrub_type,keys):
                 embeded_file_path = directory_to_extract_to+"\\xl\embeddings"
             else :
                 continue
-
-            with zipfile.ZipFile(file_path, 'r') as zip_ref:
-                zip_ref.extractall(directory_to_extract_to)
+            
+            try:
+                with zipfile.ZipFile(file_path, 'r') as zip_ref:
+                    zip_ref.extractall(directory_to_extract_to)
+            except:
+                print("Zip File issue in Embedded")
+                continue
+                
             
             if os.path.isdir(embeded_file_path):
                 print("Embedded files exist")
@@ -72,7 +79,7 @@ def embedded_file_scrubbing(folder_path,scrub_type,keys):
                         flag='replace'
                         print(keys[1])
                         Main_Fn.Main_function(embeded_file_path,flag,keys[1])
-            
+                
                     PropRemoval.prop_removal(embeded_file_path)
 
                 except Exception as e:
@@ -82,15 +89,17 @@ def embedded_file_scrubbing(folder_path,scrub_type,keys):
                 scrub_file_path=shutil.make_archive(directory_to_extract_to, 'zip', directory_to_extract_to)
                 fname,fext = os.path.splitext(scrub_file_path)
             
-                print(file_path)
+#                 print(file_path)
                 os.remove(file_path)
                 os.rename(scrub_file_path, fname + fileext)
                 print("Done with Embeded files")
                 shutil.rmtree(directory_to_extract_to)
             else:
                 print("Couldn't find embedded files")
-                shutil.rmtree(directory_to_extract_to)
-                
+                try:
+                    shutil.rmtree(directory_to_extract_to)
+                except:
+                    print("Kindly delete : "+directory_to_extract_to)
 
 
 # In[ ]:

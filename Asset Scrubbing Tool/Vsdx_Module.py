@@ -16,10 +16,17 @@ import FileName_Remove
 
 
 def Scrubbing_Process_vsdx(Location,Keywords,Flag,vsdxFileList):     
-
+    global Scrubbing_Location
+    global Scrubbing_Keywords
+    global Scrubbing_vsdxFileList
+    
+    Scrubbing_Location=Location
+    Scrubbing_Keywords=Keywords
+    Scrubbing_vsdxFileList=vsdxFileList
     
     def vsdxElementsRemove(Location,Keywords,Flag,vsdxFileList):
         print("Yes")
+        Remove_Keywords=Scrubbing_Keywords.split(",")
         file_path=r"latest_macro.xlsm"
         Key_List = Keywords.split(",")
         
@@ -62,6 +69,7 @@ def Scrubbing_Process_vsdx(Location,Keywords,Flag,vsdxFileList):
         wb.save(file_path)
 
         def run_excel_macro (file_path, separator_char):
+            win32.pythoncom.CoInitialize ()
             xl = win32.Dispatch('Excel.Application')
             xl.Application.visible = False
 
@@ -103,6 +111,13 @@ def Scrubbing_Process_vsdx(Location,Keywords,Flag,vsdxFileList):
         
     def vsdxElementsReplace(Location,res,Flag,vsdxFileList):
         print("Yes")
+        Replace_List=[]
+        print("Replace-")
+        Replace_Keywords=Scrubbing_Keywords.split(",")
+        for i in Replace_Keywords:
+            Single_Keyword=i.split(":")
+            Replace_List.append(Single_Keyword)
+        print(Replace_List)
         file_path=r"latest_macro.xlsm"
         
         keywords = res
@@ -132,6 +147,7 @@ def Scrubbing_Process_vsdx(Location,Keywords,Flag,vsdxFileList):
         wb.save(file_path)
 
         def run_excel_macro (file_path, separator_char):
+            win32.pythoncom.CoInitialize ()
             xl = win32.Dispatch('Excel.Application')
             xl.Application.visible = False
 
@@ -178,7 +194,8 @@ def Scrubbing_Process_vsdx(Location,Keywords,Flag,vsdxFileList):
         Remove_Keywords=Keywords.split(",")
         print(Remove_Keywords)
         
-        FileName_Remove.FileName_Removal(Location,Keywords,xlsxFileList)
+#         FileName_Remove.FileName_Removal(Location,Keywords,xlsxFileList)
+        FileName_Remove.FileName_Removal(Remove_Keywords,Scrubbing_vsdxFileList)
         vsdxElementsRemove(Location,Keywords,Flag,vsdxFileList)
     else:
         Replace_List=[]
@@ -192,6 +209,7 @@ def Scrubbing_Process_vsdx(Location,Keywords,Flag,vsdxFileList):
         ini_string1 = Keywords
         res = dict(item.split(":") for item in ini_string1.split(","))         
         
-        FileName_Replace.FileName_Replace(Location,Keywords,xlsxFileList)
+#         FileName_Replace.FileName_Replace(Location,Keywords,xlsxFileList)
+        FileName_Replace.FileName_Replace(Replace_List,Scrubbing_vsdxFileList)
         vsdxElementsReplace(Location,res,Flag,vsdxFileList)
 

@@ -13,12 +13,14 @@ from xml.dom import minidom
 def prop_removal(folder_path):
     
     tags_to_scrub = ['Template','dc:creator','Company','Manager','dc:subject','dc:title','cp:keywords','dc:description','cp:category']
-    formats_sup = ['.pptx','.xlsx','.docx']
+    formats_sup = ['.pptx','.xlsx','.docx','.vsdx']
     for root, dirs, files in os.walk(folder_path):
                 for file in files:
                     try:
                         filename,fileext = os.path.splitext(file)
-                        print("Property Removal : "+file)
+#                         print("Property Removal : "+file)
+                        while filename[-1]==" ":
+                            filename=filename[:-1]
                         directory_to_extract_to = root+"\\"+filename
                         file_path=os.path.join(root,file)
 
@@ -32,7 +34,7 @@ def prop_removal(folder_path):
 
                         os.remove(file_path)
                         for file in os.listdir(prop_path):
-                            print(file)
+#                             print(file)
                             if file == "app.xml" or file == "core.xml" or file == "custom.xml":
 
                                 xmldoc = minidom.parse(os.path.join(prop_path,file))

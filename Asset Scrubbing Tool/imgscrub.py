@@ -160,6 +160,7 @@ def unzip_ppt(file_path):
     with zipfile.ZipFile(file_path, 'r') as zip_ref:
         zip_ref.extractall(directory_to_extract_to)
 
+       
     count=0
     #Moving images to test folder
     for file in os.listdir(img_file_src):
@@ -286,7 +287,7 @@ def start_img_scrub(f_path,client):
     print(checkpoint_path)
 #---------------------------------------------------------------------------------
     # -----------------------------CLearing SuspectEmf file contents--------------
-    if(os.path.isdir(r"./suspectEmf.txt")):
+    if(os.path.exists(r"./suspectEmf.txt")):
 
         file = open(r"./suspectEmf.txt","r+")
         file.truncate(0)
@@ -299,7 +300,7 @@ def start_img_scrub(f_path,client):
     if(os.path.isdir(checkpoint_path)):
 
         latest = load_model(checkpoint_path)
-        model.load_weights(latest)
+        model.load_weights(latest).expect_partial()
     else:
         create_train_dataset()
         model = train_model(model)
@@ -311,6 +312,8 @@ def start_img_scrub(f_path,client):
             try:
                 filename,fileext = os.path.splitext(file)
                 print(file)
+                while filename[-1]==" ":
+                    filename=filename[:-1]
                 directory_to_extract_to = root+"\\"+filename
                 file_path=os.path.join(root,file)
 
@@ -318,16 +321,28 @@ def start_img_scrub(f_path,client):
                     img_file_src = directory_to_extract_to+"\ppt\media"
                 elif fileext == ".docx":
                     img_file_src = directory_to_extract_to+"\word\media"
-
                 elif fileext == ".xlsx":
-                    img_file_src = directory_to_extract_to+"\\xl\media"
+                    img_file_src = directory_to_extract_to+"\\xl\media"    
+                elif fileext == ".vsdx":
+                    img_file_src = directory_to_extract_to+"\\visio\media"
                 else :
                     continue
 
                 img_file_des = r".\basedata\test"
-
-                unzip_ppt(file_path)
-
+                
+                try:
+                    unzip_ppt(file_path)
+                except Exception:
+                    errfile = open(r"./suspectEmf.txt","a")
+                    errfile.write("Couldn't unzip file :"+file_path+"\n")
+                    print("Couldn't unzip file")
+                try:
+                    os.remove(file_path)
+                except Exception:
+                    errfile = open(r"./suspectEmf.txt","a")
+                    errfile.write("Couldn't delete file :"+file_path+"\n")
+                    print("Couldn't delete file")
+                
                 #---------------------------------------------------------------------------------------------------------------
                 for file in os.listdir(test_dir_path):
                     imgname,imgext = os.path.splitext(file)
@@ -352,8 +367,8 @@ def start_img_scrub(f_path,client):
 
 
                 #Zipping and changing file back to ppt
-                output_path = r".\Scrub\\"+os.path.basename(root)+"\\"+filename       
-                file_path=shutil.make_archive(output_path, 'zip', directory_to_extract_to)
+#                 output_path = r".\Scrub\\"+os.path.basename(root)+"\\"+filename       
+                file_path=shutil.make_archive(directory_to_extract_to, 'zip', directory_to_extract_to)
                 fname,fext = os.path.splitext(file_path)
                 os.rename(file_path, fname + fileext)
                 shutil.rmtree(directory_to_extract_to)
@@ -369,9 +384,13 @@ def start_img_scrub(f_path,client):
                 for file_name in os.listdir(test_dir_path):
                     os.remove('./basedata/test/'+file_name)
 
-            except Exception:
+            except Exception as e:
                 errfile = open(r"./suspectEmf.txt","a")
-                errfile.write("Exception Occured in file "+file+"\n")
+                errfile.write("Exception Occured in file :"+file_path+"\n")
+                try:
+                    shutil.rmtree(directory_to_extract_to)
+                except:
+                    print("Kindly Remove : " + directory_to_extract_to)
 # In[ ]:
 
 

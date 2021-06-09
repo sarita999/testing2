@@ -120,7 +120,8 @@ def Scrubbing_Replace():
                 print("Couldn't open the file :",File)
 
     pptElementsReplace()
-    FileName_Replace.FileName_Replace(Scrubbing_Location,Scrubbing_Keywords,Scrubbing_pptxFileList)
+    FileName_Replace.FileName_Replace(Replace_List,Scrubbing_pptxFileList)
+    Pptx_ReviewComment_Removal.reviewcommentsRemovalFromPPT(Scrubbing_pptxFileList)
 
     
 
@@ -202,8 +203,8 @@ def Scrubbing_Remove():
                 print("Couldn't open the file :",File)
     pptElementsRemoval()
 
-    FileName_Remove.FileName_Removal(Scrubbing_Location,Scrubbing_Keywords,Scrubbing_pptxFileList)
-    #Pptx_ReviewComment_Removal.reviewcommentsRemovalFromPPT(Scrubbing_Location,Remove_Keywords,Scrubbing_pptxFileList)
+    FileName_Remove.FileName_Removal(Remove_Keywords,Scrubbing_pptxFileList)
+    Pptx_ReviewComment_Removal.reviewcommentsRemovalFromPPT(Scrubbing_pptxFileList)
 
 
 # In[ ]:

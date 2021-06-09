@@ -102,8 +102,9 @@ def Scrubbing_Replace():
                 print("Couldn't open the file :",File)
                 
     replaceWordFromDoc()
-    Docx_HeaderFooter_Replace.header_text_Replace(Scrubbing_Location,Replace_List,Scrubbing_docsFileList)
-    FileName_Replace.FileName_Replace(Scrubbing_Location,Scrubbing_Keywords,Scrubbing_docsFileList)
+    FileName_Replace.FileName_Replace(Replace_List,Scrubbing_docsFileList)
+#     Docx_HeaderFooter_Replace.header_text_Replace(Scrubbing_Location,Replace_List,Scrubbing_docsFileList)
+#     FileName_Replace.FileName_Replace(Scrubbing_Location,Scrubbing_Keywords,Scrubbing_docsFileList)
 
     
 
@@ -164,8 +165,9 @@ def Scrubbing_Remove():
                 
     removeWordFromDoc()
     Docx_HeaderFooter_Remove.header_text_removal(Scrubbing_Location,Remove_Keywords,Scrubbing_docsFileList)
+    FileName_Remove.FileName_Removal(Remove_Keywords,Scrubbing_docsFileList)
     #Docx_ReviewComment_Removal.reviewcommentsRemovalFromDoc(Scrubbing_Location,Remove_Keywords,Scrubbing_docsFileList)
-    FileName_Remove.FileName_Removal(Scrubbing_Location,Scrubbing_Keywords,Scrubbing_docsFileList)
+#     FileName_Remove.FileName_Removal(Scrubbing_Location,Scrubbing_Keywords,Scrubbing_docsFileList)
 
 
 

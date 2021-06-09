@@ -16,10 +16,16 @@ import FileName_Remove
 
 
 def Scrubbing_Process_xlsx(Location,Keywords,Flag,xlsxFileList):       
+    global Scrubbing_Location
+    global Scrubbing_Keywords
+    global Scrubbing_xlsxFileList
     
+    Scrubbing_Location=Location
+    Scrubbing_Keywords=Keywords
+    Scrubbing_xlsxFileList=xlsxFileList
    
     def xlsxElementsRemove(Location,keywords,Flag,xlsxFileList):        
-        
+        Remove_Keywords=Scrubbing_Keywords.split(",")
         file_path=r"latest_macro.xlsm"
         
         wb = openpyxl.load_workbook(file_path,keep_vba=True)
@@ -95,6 +101,15 @@ def Scrubbing_Process_xlsx(Location,Keywords,Flag,xlsxFileList):
         
     ##Code for Replace Function xlsx
     def xlsxElementsReplace(Location,res,Flag,xlsxFileList):
+        Replace_List=[]
+        print("Replace-")
+        Replace_Keywords=Scrubbing_Keywords.split(",")
+        for i in Replace_Keywords:
+            Single_Keyword=i.split(":")
+            Replace_List.append(Single_Keyword)
+        print(Replace_List)
+        
+        
         file_path=r"latest_macro.xlsm"
         
         keywords = res
@@ -141,8 +156,13 @@ def Scrubbing_Process_xlsx(Location,Keywords,Flag,xlsxFileList):
                 template = "An exception of type {0} occurred. Arguments:\n{1!r}"
                 message = template.format(type(ex).__name__, ex.args)
                 print(message)
-
-            xl.Application.Quit()
+            try:
+                xl.Application.Quit()
+            except:
+                try:
+                    xl.Application.Quit()
+                except:
+                    print("Closing issue excel")
             del xl
 
 
@@ -176,7 +196,7 @@ def Scrubbing_Process_xlsx(Location,Keywords,Flag,xlsxFileList):
         keywords = Convert(Remove_Keywords)
         print(keywords)
         
-        FileName_Remove.FileName_Removal(Location,Keywords,xlsxFileList)
+        FileName_Remove.FileName_Removal(Remove_Keywords,Scrubbing_xlsxFileList)
         xlsxElementsRemove(Location,keywords,Flag,xlsxFileList)
         
     else:
@@ -191,7 +211,7 @@ def Scrubbing_Process_xlsx(Location,Keywords,Flag,xlsxFileList):
         ini_string1 = Keywords
         res = dict(item.split(":") for item in ini_string1.split(","))         
         
-        FileName_Replace.FileName_Replace(Location,Keywords,xlsxFileList)
+        FileName_Replace.FileName_Replace(Replace_List,Scrubbing_xlsxFileList)
         xlsxElementsReplace(Location,res,Flag,xlsxFileList)
 
 
